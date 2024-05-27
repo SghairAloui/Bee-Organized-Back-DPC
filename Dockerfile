@@ -19,12 +19,12 @@ COPY . .
 RUN mvn clean package
 
 # Download and extract Apache Tomcat
-RUN curl -O https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.85/bin/apache-tomcat-9.0.85.tar.gz && \
-    tar xfz apache-tomcat-9.0.85.tar.gz && \
-    mv apache-tomcat-9.0.85 /opt/tomcat
+RUN curl -O https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.89/bin/apache-tomcat-9.0.89.tar.gz && \
+    tar xfz apache-tomcat-9.0.89.tar.gz && \
+    mv apache-tomcat-9.0.89 /opt/tomcat
 
 # Remove unnecessary files
-RUN rm -f apache-tomcat-9.0.85.tar.gz && \
+RUN rm -f apache-tomcat-9.0.89.tar.gz && \
     rm -rf /opt/tomcat/webapps/*
 
 # Copy the built .war file to the webapps directory
