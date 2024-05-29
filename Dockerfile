@@ -11,7 +11,7 @@ COPY . .
 RUN mvn clean install -DskipTests
 
 # Create a new image with the JAR file
-FROM openjdk/openjdk17:slim
+FROM maven:3.8.4-openjdk-17-slim
 
 # Set the working directory to /app
 WORKDIR /app
