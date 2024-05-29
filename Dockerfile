@@ -11,7 +11,7 @@ COPY . .
 RUN mvn clean install -DskipTests
 
 # Create a new image with the JAR file
-FROM adoptopenjdk/openjdk17:alpine-jre
+FROM openjdk/openjdk17:slim
 
 # Set the working directory to /app
 WORKDIR /app
