@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bee-organized-back-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bee-organized-back-app
+  template:
+    metadata:
+      labels:
+        app: bee-organized-back-app
+    spec:
+      containers:
+        - name: bee-organized-back-app
+          image: moohamedd/beeorganized:latest
+          ports:
+            - containerPort: 9999
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bee-organized-back-app
+spec:
+  selector:
+    app: bee-organized-back-app
+  ports:
+    - protocol: TCP
+      port: 9999  # Use the same port as exposed by the container
+      targetPort: 9999
+  type: LoadBalancer

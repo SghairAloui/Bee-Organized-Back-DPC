@@ -11,7 +11,7 @@ public class CorsConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/stomp-endpoint")
-                .allowedOrigins("http://localhost:4200","*") // Remplacez ceci par l'URL de votre frontend
+                .allowedOrigins("http://localhost:4200","*")
                 .allowedMethods("*") // Autorisez toutes les méthodes HTTP
                 .allowCredentials(true); // Autorise les credentials (cookies, autorisation)
     }

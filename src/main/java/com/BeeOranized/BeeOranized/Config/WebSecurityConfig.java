@@ -48,7 +48,7 @@ public class WebSecurityConfig  {
                 .and()
                 .authorizeHttpRequests()// Allow only ADMIN_ROLE to access /signup
                 .antMatchers("/signin/**","/generate/**","/reset-password/**").permitAll() // Allow everyone to access /signin
-                .antMatchers("/project/**","/task/**","/users/**","/except/**","/conversation/**","/email/**","/stomp-endpoint/**").permitAll() // Allow everyone to access /project
+                .antMatchers("/project/**","/task/**","/swagger*/**","/users/**","/except/**","/conversation/**","/email/**","/stomp-endpoint/**","**").permitAll() // Allow everyone to access /project
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling()
