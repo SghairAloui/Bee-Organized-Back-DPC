@@ -9,7 +9,6 @@ import java.util.Collections;
 import java.util.List;
 
 @RestController
-@CrossOrigin("http://localhost:4200/")
 
 public class ProjectController {
     @Autowired

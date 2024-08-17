@@ -51,11 +51,12 @@ public class UserService {
     }
     private  void sendResetPasswordEmail(User user, String resetPasswordToken) {
         // Prepare email content
-        String subject = "Reset Password Request";
-        String message = "Dear User,\n\nYou have requested to reset your password.\n" +
-                "Please click the link below to reset your password:\n\n" +
-                "http://localhost:4200/reset-password?token=" + resetPasswordToken + "\n\n" +
-                "If you did not request this, please ignore this email.\n\nRegards,\nYour Team";
+        String subject = "Demande de Réinitialisation de Mot de Passe";
+        String message = "Cher utilisateur,<br>Vous avez demandé à réinitialiser votre mot de passe.<br>" +
+                "Veuillez cliquer sur le lien ci-dessous pour réinitialiser votre mot de passe :<br>" +
+                "http://localhost:4200/reset-password?token=" + resetPasswordToken + "<br>" +
+                "Si vous n'avez pas demandé cela, veuillez ignorer cet email.<br>Cordialement,<br>Votre Équipe";
+
 
         // Send email to the user
         emailService.sendEmail(user.getUserEmail(), subject, message);

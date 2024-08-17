@@ -9,10 +9,33 @@ public class JwtResponseDto {
     private Long userId;
     private List<String> roles;
 
-    public JwtResponseDto(String accessToken, String username, List<String> roles, Long userId) {
+
+
+    private String name;
+    private  String userCity;
+
+    public JwtResponseDto(String accessToken, String username,String name,String userCity, List<String> roles, Long userId) {
         this.token = accessToken;
         this.roles = roles;
         this.userId = userId;
+        this.name = name;
+        this.userCity = userCity;
+
+    }
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getUserCity() {
+        return userCity;
+    }
+
+    public void setUserCity(String userCity) {
+        this.userCity = userCity;
     }
 
     public JwtResponseDto(String accessToken) {

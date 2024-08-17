@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import com.BeeOranized.BeeOranized.Entity.User;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,14 +21,11 @@ public class UserDetailsImpl implements UserDetails {
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
-
+private String name;
     private String email;
 
+    @Getter
     private String firstName;
-
-    public String getFirstName() {
-        return firstName;
-    }
 
     private String userCity;
 
@@ -40,10 +38,11 @@ public class UserDetailsImpl implements UserDetails {
 
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserDetailsImpl(Long id, String email, String password, String userCity,
+    public UserDetailsImpl(Long id, String email,String name, String password, String userCity,
                            Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.email = email;
+        this.name = name;
         this.password = password;
         this.userCity = userCity;
         this.authorities = authorities;
@@ -57,6 +56,7 @@ public class UserDetailsImpl implements UserDetails {
         return new UserDetailsImpl(
                 user.getUserId(),
                 user.getUserEmail(),
+                user.getName(),
                 user.getUserPassword(),
                 user.getUserCity(),
                 authorities);
@@ -85,6 +85,9 @@ public class UserDetailsImpl implements UserDetails {
 
     public String getCity() {
         return userCity;
+    }
+    public String getName() {
+        return name;
     }
 
     @Override

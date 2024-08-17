@@ -27,7 +27,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 
-@CrossOrigin("http://localhost:4200/")
 @RestController
 public class AuthController {
     @Autowired
@@ -68,13 +67,19 @@ public class AuthController {
         String jwt = jwtUtils.generateJwtToken(authentication);
 
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        System.out.println(userDetails.getCity());
+
         List<String> roles = userDetails.getAuthorities().stream()
                 .map(item -> item.getAuthority())
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok(new JwtResponseDto(jwt,
                 loginRequest.getUserEmail(),
+
+                userDetails.getName(),
+                userDetails.getCity(),
                 roles,
+
                 userDetails.getId()));
     }
 
@@ -139,15 +144,34 @@ public class AuthController {
         }
     }
     private void sendAccountEmail(User user, String password) {
-        // Prepare email content
-        String subject = "Account Created";
-        String message = "Dear User,\n\nYour account has been created successfully.\n\n\n\n" +
-                "Please login to your account using the following credentials:\n\n" +
-                "<strong>Email:</strong> <u>" + user.getUserEmail() + "</u>\n\n" +
-                "<strong>Password:</strong> <u>" + password + "</u>\n\n" +
-                "Regards,\nYour Team";
-
-
+        // Préparer le contenu de l'email
+        String subject = "Compte Créé";
+        String message = "<html>" +
+                "<body style='font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f9;'>" +
+                "<div style='background-color: #f4f4f9; padding: 20px;'>" +
+                "<div style='max-width: 600px; margin: auto; background-color: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 0 15px rgba(0,0,0,0.1);'>" +
+                "<div style='text-align: center; padding-bottom: 20px;'>" +
+                "</div>" +
+                "<h2 style='color: #0066cc; text-align: center;'>Bienvenue!</h2>" +
+                "<p style='color: #333333;'>Cher utilisateur,</p>" +
+                "<p style='color: #333333;'>Nous sommes ravis de vous informer que votre compte a été créé avec succès. Vous pouvez maintenant vous connecter à votre compte en utilisant les informations ci-dessous :</p>" +
+                "<div style='background-color: #e7f3fe; padding: 15px; border-radius: 5px; margin: 20px 0;'>" +
+                "<p style='margin: 0; color: #333333;'><strong>Email :</strong> <u>" + user.getUserEmail() + "</u></p>" +
+                "<p style='margin: 0; color: #333333;'><strong>Mot de passe :</strong> <u>" + password + "</u></p>" +
+                "</div>" +
+                "<p style='color: #333333;'>Pour toute question ou assistance, n'hésitez pas à nous contacter.</p>" +
+                "<p style='color: #333333;'>Cordialement,<br>Votre Équipe</p>" +
+                "<div style='text-align: center; margin: 20px 0;'>" +
+                "<a href='http://localhost:4200/login' style='background-color: #0066cc; color: #ffffff; padding: 10px 20px; text-decoration: none; border-radius: 5px;'>Se connecter</a>" +
+                "</div>" +
+                "<hr style='border: 0; height: 1px; background-color: #eeeeee; margin: 20px 0;'>" +
+                "<div style='text-align: center;'>" +
+                "<p style='color: #aaaaaa; font-size: 12px;'>© 2024 Votre Société. Tous droits réservés.</p>" +
+                "</div>" +
+                "</div>" +
+                "</div>" +
+                "</body>" +
+                "</html>";
 
         // Send email to the user
         emailService.sendEmail(user.getUserEmail(), subject, message);
@@ -176,11 +200,29 @@ public class AuthController {
     }
     private  void sendResetPasswordEmail(User user, String resetPasswordToken) {
         // Prepare email content
-        String subject = "Reset Password Request";
-        String message = "Dear User,\n\nYou have requested to reset your password.\n" +
-                "Please copy  the reset token below to reset your password:\n\n" +
-                "the reset token is : <strong><u>" + resetPasswordToken + "</u></strong>\n\n"+
-                "If you did not request this, please ignore this email.\n\nRegards,\nYour Team";
+        String subject = "Demande de Réinitialisation de Mot de Passe";
+        String message = "<html>" +
+                "<body style='font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f9;'>" +
+                "<div style='background-color: #f4f4f9; padding: 20px;'>" +
+                "<div style='max-width: 600px; margin: auto; background-color: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 0 15px rgba(0,0,0,0.1);'>" +
+                "<div style='text-align: center; padding-bottom: 20px;'>" +
+                "</div>" +
+                "<h2 style='color: #0066cc; text-align: center;'>Bienvenue!</h2>" +
+                "<p style='color: #333333;'>Cher utilisateur,</p>" +
+                "<p style='color: #333333;'>Vous avez demandé à réinitialiser votre mot de passe. Veuillez copier le jeton de réinitialisation ci-dessous pour réinitialiser votre mot de passe :</p>" +
+                "<div style='background-color: #e7f3fe; padding: 15px; border-radius: 5px; margin: 20px 0;'>" +
+                "<p style='margin: 0; color: #333333;'><strong>Le jeton de réinitialisation est : </strong> <u>" + resetPasswordToken + "</u></p>" +
+                "</div>" +
+                "<p style='color: #333333;'>Si vous n'avez pas demandé cela, veuillez ignorer cet email.</p>" +
+                "<p style='color: #333333;'>Cordialement,<br>Votre Équipe</p>" +
+                "<hr style='border: 0; height: 1px; background-color: #eeeeee; margin: 20px 0;'>" +
+                "<div style='text-align: center;'>" +
+                "<p style='color: #aaaaaa; font-size: 12px;'>© 2024 Votre Société. Tous droits réservés.</p>" +
+                "</div>" +
+                "</div>" +
+                "</div>" +
+                "</body>" +
+                "</html>";
 
         // Send email to the user
         emailService.sendEmail(user.getUserEmail(), subject, message);

@@ -23,7 +23,6 @@ import java.util.Map;
  */
 @RequiredArgsConstructor
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
 public class MessageSocketController {
     private final MessageSocketServiceImpl socketService;
 

@@ -27,12 +27,33 @@ public class ProjectService {
         // Fetch assigned users' email addresses from the project entity
         List<String> assignedUsers = project.getAssignedUsers();
 
-        // Prepare email content
-        String subject = "New Project Created: " + project.getTitle();
-        String message = "Dear User,\n\nA new project has been created: " + "<strong>" + project.getTitle() + "</strong>" +
-                "\nYou are assigned to this project as a team member.\n\nProject Details:\n" +
-                "Description: " + "<strong>" + project.getDescription() + "</strong>" + "\nStart Date: " + "<strong>" + project.getStartDate() +
-                "</strong>" + "\nEnd Date: " + "<strong>" + project.getEndDate() + "</strong>" + "\n\nRegards,\nYour Team";
+        // Préparer le contenu de l'email
+        String subject = "Nouveau Projet Créé : " + project.getTitle();
+        String message = "<html>" +
+                "<body style='font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f9;'>" +
+                "<div style='background-color: #f4f4f9; padding: 20px;'>" +
+                "<div style='max-width: 600px; margin: auto; background-color: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 0 15px rgba(0,0,0,0.1);'>" +
+                "<div style='text-align: center; padding-bottom: 20px;'>" +
+                "</div>" +
+                "<h2 style='color: #0066cc; text-align: center;'>Nouveau Projet Créé</h2>" +
+                "<p style='color: #333333;'>Cher utilisateur,</p>" +
+                "<p style='color: #333333;'>Un nouveau projet a été créé : <strong>" + project.getTitle() + "</strong>.</p>" +
+                "<p style='color: #333333;'>Vous êtes assigné à ce projet en tant que membre de l'équipe.</p>" +
+                "<div style='background-color: #e7f3fe; padding: 15px; border-radius: 5px; margin: 20px 0;'>" +
+                "<p style='margin: 0; color: #333333;'><strong>Title :</strong> " + project.getTitle() + "</p>" +
+                "<p style='margin: 0; color: #333333;'><strong>Description :</strong> " + project.getDescription() + "</p>" +
+                "<p style='margin: 0; color: #333333;'><strong>Date de début :</strong> " + project.getStartDate() + "</p>" +
+                "<p style='margin: 0; color: #333333;'><strong>Date de fin :</strong> " + project.getEndDate() + "</p>" +
+                "</div>" +
+                "<p style='color: #333333;'>Cordialement,<br>Votre Équipe</p>" +
+                "<hr style='border: 0; height: 1px; background-color: #eeeeee; margin: 20px 0;'>" +
+                "<div style='text-align: center;'>" +
+                "<p style='color: #aaaaaa; font-size: 12px;'>© 2024 Votre Société. Tous droits réservés.</p>" +
+                "</div>" +
+                "</div>" +
+                "</div>" +
+                "</body>" +
+                "</html>";
 
 
         // Send email to each assigned user
